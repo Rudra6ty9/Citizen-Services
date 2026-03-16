@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vadodara Connect | Sign In</title>
+    <meta name="description" content="Sign in to Vadodara Connect — your city's digital citizen services portal.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="auth-page">
+        <div class="auth-card">
+
+            <div class="auth-brand">
+                <div class="auth-brand-icon">🏛️</div>
+                <div>
+                    <div class="auth-brand-name">Vadodara Connect</div>
+                    <div class="auth-brand-sub">Citizen Services Portal</div>
+                </div>
+            </div>
+
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to report issues, track complaints, and serve your city.</p>
+
+            <form id="signinForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <button type="button" class="eye-btn"
+                            onclick="togglePassword('loginPassword', this)">👁️</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="signinBtn">Sign In →</button>
+            </form>
+
+            <hr class="divider">
+
+            <p class="switch">
+                New to Vadodara Connect?
+                <a href="register.html">Create an account</a>
+            </p>
+
+            <p style="text-align:center;margin-top:12px;font-size:12px;color:var(--text-muted);">
+                City Administrator? <a href="admin-login.html" style="color:#FB923C;font-weight:600;text-decoration:none;">Admin Portal →</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // If already logged in, skip to dashboard
+        if (sessionStorage.getItem('currentUser')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+            btn.textContent = input.type === 'password' ? '👁️' : '🙈';
+        }
+
+        document.getElementById('signinForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass  = document.getElementById('loginPassword').value;
+            const btn   = document.getElementById('signinBtn');
+
+            btn.textContent = 'Signing in…';
+            btn.disabled = true;
+
+            try {
+                const res  = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password: pass })
+                });
+                const data = await res.json();
+
+                if (data.ok) {
+                    sessionStorage.setItem('currentUser', JSON.stringify(data.data));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    btn.textContent = 'Sign In →';
+                    btn.disabled = false;
+                    let errEl = document.getElementById('loginError');
+                    if (!errEl) {
+                        errEl = document.createElement('p');
+                        errEl.id = 'loginError';
+                        errEl.style.cssText = 'color:#EF4444;font-size:13px;margin-top:12px;text-align:center;';
+                        document.getElementById('signinForm').appendChild(errEl);
+                    }
+                    errEl.textContent = '⚠️ ' + (data.error || 'Invalid email or password.');
+                }
+            } catch (err) {
+                btn.textContent = 'Sign In →';
+                btn.disabled = false;
+                alert('⚠️ Could not connect to server. Make sure the server is running (node server.js).');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

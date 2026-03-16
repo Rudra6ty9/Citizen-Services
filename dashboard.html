@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vadodara Connect | Dashboard</title>
+<meta name="description" content="Vadodara Connect citizen dashboard — report issues, track complaints, and earn rewards.">
+<link rel="stylesheet" href="style.css">
+<!-- Leaflet.js for interactive maps (free, no API key needed) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+</head>
+<body>
+
+<div id="notification"></div>
+
+<div class="container">
+
+    <!-- ====== SIDEBAR ====== -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">🏛️</div>
+            <div>
+                <div class="sidebar-logo-text">Vadodara Connect</div>
+                <div class="sidebar-logo-sub">Citizen Portal</div>
+            </div>
+        </div>
+
+        <ul id="navList">
+            <li class="active" onclick="showSection('home', this)">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">City Feed</span>
+            </li>
+            <li onclick="showSection('complaints', this)">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Complaints</span>
+            </li>
+            <li onclick="showSection('messages', this)">
+                <span class="nav-icon">💬</span>
+                <span class="nav-label">Messages</span>
+            </li>
+            <li onclick="showSection('rewards', this)">
+                <span class="nav-icon">🏆</span>
+                <span class="nav-label">Leaderboard</span>
+            </li>
+            <li onclick="showSection('admin', this)">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Dashboard</span>
+            </li>
+            <li onclick="showSection('profile', this)">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </li>
+        </ul>
+
+        <ul class="sidebar-footer">
+            <li onclick="logout()">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-label">Logout</span>
+            </li>
+        </ul>
+
+    </div>
+    <!-- END SIDEBAR -->
+
+    <!-- ====== MAIN ====== -->
+    <div class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="toggle-btn" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+                <div>
+                    <div class="topbar-title" id="topbarTitle">City Feed</div>
+                    <div class="topbar-greeting" id="topbarGreeting">Welcome back, Citizen</div>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-avatar" id="userAvatar" onclick="showSection('profile', null)">C</div>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content-area">
+
+            <!-- ====== HOME / CITY FEED ====== -->
+            <div id="home" class="section active">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">City <span>Feed</span></h2>
+                        <p class="section-subtitle">Share civic issues with the community</p>
+                    </div>
+                </div>
+
+                <!-- Create Post -->
+                <div class="post-create card" style="max-width:600px; margin-bottom:28px;">
+                    <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;color:var(--text-primary);">📢 Share an Issue</h3>
+                    <div class="form-group">
+                        <textarea id="postCaption" placeholder="Describe the civic issue you've noticed..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadImageBtn" class="file-upload-label">
+                            📎 Attach an image (optional)
+                            <span id="fileNameDisplay" style="color:var(--accent);font-size:12px;"></span>
+                        </label>
+                        <input type="file" id="uploadImage" accept="image/*" onchange="document.getElementById('fileNameDisplay').textContent = this.files[0]?.name || ''">
+                    </div>
+                    <button class="btn btn-primary" style="width:auto;margin-top:0;" onclick="createPost()">📤 Post to Community</button>
+                </div>
+
+                <!-- Corporation Maintenance Schedules -->
+                <div style="margin-bottom: 24px;">
+                    <h3 style="font-size:14px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+                        <span style="display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);"></span>
+                        Ongoing Corporation Maintenance
+                    </h3>
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        
+                        <!-- Maintenance Card 1 -->
+                        <div style="background:linear-gradient(145deg, rgba(79,142,247,0.1), rgba(162,89,255,0.05)); border:1px solid rgba(79,142,247,0.3); border-radius:12px; padding:16px; position:relative; overflow:hidden;">
+                            <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom, #4F8EF7, #A259FF);"></div>
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                                <h4 style="font-size:15px;color:#fff;margin:0;">Vadodara Municipal Corporation</h4>
+                                <span style="background:rgba(251,146,60,0.2);color:#FB923C;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(251,146,60,0.3);">SCHEDULED</span>
+                            </div>
+                            <p style="font-size:13px;color:var(--text-muted);margin:0 0 10px 0;line-height:1.4;">
+                                <strong>Water Supply Interruption:</strong> Pipeline repair work at Alkapuri Sector 3. Water supply will be paused from 10:00 AM to 4:00 PM tomorrow.
+                            </p>
+                            <div style="font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;">
+                                <span>📅 March 17, 2026</span> • <span>📍 Alkapuri Area</span>
+                            </div>
+                        </div>
+
+                        <!-- Maintenance Card 2 -->
+                        <div style="background:linear-gradient(145deg, rgba(52,211,153,0.1), rgba(79,142,247,0.05)); border:1px solid rgba(52,211,153,0.3); border-radius:12px; padding:16px; position:relative; overflow:hidden;">
+                            <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom, #34D399, #4F8EF7);"></div>
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                                <h4 style="font-size:15px;color:#fff;margin:0;">MGVCL Power Substation</h4>
+                                <span style="background:rgba(52,211,153,0.2);color:#34D399;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;border:1px solid rgba(52,211,153,0.3);">IN PROGRESS</span>
+                            </div>
+                            <p style="font-size:13px;color:var(--text-muted);margin:0 0 10px 0;line-height:1.4;">
+                                <strong>Smart Grid Upgrades:</strong> Installing new smart transformers in Makarpura industrial zone. Brief power fluctuations expected.
+                            </p>
+                            <div style="font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;">
+                                <span>📅 March 16-18, 2026</span> • <span>📍 Makarpura</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;margin-top:32px;">
+                    <h3 style="font-size:16px;color:var(--text-primary);margin:0;">Citizen Posts</h3>
+                </div>
+                <div id="feed" class="feed-grid"></div>
+                <p id="feedEmpty" style="color:var(--text-muted);font-size:14px;text-align:center;margin-top:40px;display:none;">No posts yet. Be the first to share an issue!</p>
+
+            </div>
+
+            <!-- ====== COMPLAINTS ====== -->
+            <div id="complaints" class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Raise a <span>Complaint</span></h2>
+                        <p class="section-subtitle">Report civic problems — our team will address them</p>
+                    </div>
+                </div>
+
+                <!-- Map Placeholder -->
+                <div id="map"></div>
+
+                <!-- Complaint Form -->
+                <div class="form-card" style="margin-bottom:28px;">
+                    <h3 style="font-size:15px;font-weight:700;margin-bottom:18px;color:var(--text-primary);">📝 File a New Complaint</h3>
+                    <form id="complaintForm">
+                        <div class="form-group">
+                            <label for="title">Issue Title</label>
+                            <input type="text" id="title" placeholder="e.g. Broken street light on MG Road" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" placeholder="Describe the problem in detail..." style="width:100%;height:100px;resize:none;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="e.g. Alkapuri, Vadodara" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category">
+                                <option>🛣️ Road Damage</option>
+                                <option>💡 Street Lighting</option>
+                                <option>🗑️ Waste Management</option>
+                                <option>🌊 Water Supply</option>
+                                <option>🌳 Parks & Gardens</option>
+                                <option>⚡ Electricity</option>
+                                <option>🔇 Noise Pollution</option>
+                                <option>📦 Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="complaintImageInput" class="file-upload-label">
+                                📎 Attach an image (optional)
+                                <span id="complaintFileNameDisplay" style="color:var(--accent);font-size:12px;"></span>
+                            </label>
+                            <input type="file" id="complaintImageInput" accept="image/*" onchange="document.getElementById('complaintFileNameDisplay').textContent = this.files[0]?.name || ''">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:auto;">Submit Complaint →</button>
+                    </form>
+                </div>
+
+                <!-- Complaint List -->
+                <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary);">Your Complaints</h3>
+                <div id="complaintList" class="complaint-grid"></div>
+                <p id="complaintsEmpty" style="color:var(--text-muted);font-size:14px;text-align:center;margin-top:40px;display:none;">No complaints filed yet.</p>
+
+            </div>
+
+            <!-- ====== MESSAGES ====== -->
+            <div id="messages" class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">Community <span>Messages</span></h2>
+                        <p class="section-subtitle">Connect with other citizens and officials</p>
+                    </div>
+                </div>
+
+                <div class="chat-box">
+                    <div class="chat-header">
+                        <div class="chat-online-dot"></div>
+                        Vadodara Community Chat
+                        <span style="margin-left:auto;font-size:12px;color:var(--text-muted);font-weight:400;">All Citizens</span>
+                    </div>
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message received">Hello citizens! 👋 Welcome to the Vadodara Connect community chat.</div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMessage()">
+                        <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ====== REWARDS / LEADERBOARD ====== -->
+            <div id="rewards" class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">City <span>Leaderboard</span></h2>
+                        <p class="section-subtitle">Earn points by resolving civic issues</p>
+                    </div>
+                </div>
+
+                <!-- Points Banner -->
+                <div class="card" style="background:linear-gradient(135deg,rgba(79,142,247,0.15),rgba(162,89,255,0.1));border-color:rgba(79,142,247,0.25);margin-bottom:24px;display:flex;align-items:center;gap:20px;">
+                    <div style="font-size:48px;line-height:1;">🏆</div>
+                    <div>
+                        <p style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">YOUR TOTAL POINTS</p>
+                        <p style="font-size:38px;font-weight:900;letter-spacing:-1px;color:var(--accent);" id="leaderPoints">0</p>
+                        <p style="font-size:12px;color:var(--text-secondary);">Earn 10 pts per resolved complaint</p>
+                    </div>
+                </div>
+
+                <div class="leaderboard-list" id="leaderboardList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- ====== ADMIN ====== -->
+            <div id="admin" class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">City <span>Dashboard</span></h2>
+                        <p class="section-subtitle">Overview of all civic activity in Vadodara</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon blue">📋</div>
+                        <div class="stat-value" id="totalComplaints">0</div>
+                        <div class="stat-label">Total Complaints</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-value" id="resolved">0</div>
+                        <div class="stat-label">Resolved</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon orange">⏳</div>
+                        <div class="stat-value" id="pending">0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-icon purple">⭐</div>
+                        <div class="stat-value" id="points">0</div>
+                        <div class="stat-label">Total Points</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="card" style="margin-top:4px;">
+                    <h3 style="font-size:15px;font-weight:700;margin-bottom:16px;">Resolution Rate</h3>
+                    <div style="background:rgba(255,255,255,0.06);border-radius:99px;height:10px;overflow:hidden;margin-bottom:8px;">
+                        <div id="progressBar" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0%;border-radius:99px;transition:width 0.8s cubic-bezier(0.4,0,0.2,1);"></div>
+                    </div>
+                    <p style="font-size:13px;color:var(--text-muted);" id="progressLabel">0 of 0 complaints resolved</p>
+                </div>
+            </div>
+
+            <!-- ====== PROFILE ====== -->
+            <div id="profile" class="section">
+
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">My <span>Profile</span></h2>
+                        <p class="section-subtitle">Your citizen account overview</p>
+                    </div>
+                </div>
+
+                <div class="profile-header-card">
+                    <div class="profile-avatar-big" id="profileAvatarBig">C</div>
+                    <div class="profile-info">
+                        <h2 id="profileName">Citizen</h2>
+                        <p id="profileEmail">email@example.com</p>
+                        <p style="font-size:12px;color:var(--text-muted);margin-top:4px;" id="profileJoin">Joined: —</p>
+                        <span class="role-badge" id="profileRole">Citizen</span>
+                    </div>
+                </div>
+
+                <div class="profile-stats-row">
+                    <div class="stat-card blue">
+                        <div class="stat-icon blue">⭐</div>
+                        <div class="stat-value" id="profilePoints">0</div>
+                        <div class="stat-label">Total Points</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-value" id="profileResolved">0</div>
+                        <div class="stat-label">Resolved</div>
+                    </div>
+                    <div class="stat-card orange">
+                        <div class="stat-icon orange">📋</div>
+                        <div class="stat-value" id="profileComplaints">0</div>
+                        <div class="stat-label">Complaints</div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- END CONTENT AREA -->
+    </div> <!-- END MAIN -->
+</div> <!-- END CONTAINER -->
+
+<!-- Leaflet.js -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
