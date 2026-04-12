@@ -1,156 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vadodara Connect | Create Account</title>
-<meta name="description" content="Join Vadodara Connect and help improve your city by reporting civic issues.">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vadodara Connect | Create Account</title>
+    <meta name="description" content="Join Vadodara Connect and help improve your city by reporting civic issues.">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="auth-page">
-    <div class="auth-card">
+    <div class="auth-page">
+        <div class="auth-card">
 
-        <div class="auth-brand">
-            <div class="auth-brand-icon">🏛️</div>
-            <div>
-                <div class="auth-brand-name">Vadodara Connect</div>
-                <div class="auth-brand-sub">Citizen Services Portal</div>
+            <div class="auth-brand">
+                <div class="auth-brand-icon">🏛️</div>
+                <div>
+                    <div class="auth-brand-name">Vadodara Connect</div>
+                    <div class="auth-brand-sub">Citizen Services Portal</div>
+                </div>
             </div>
+
+            <h2>Create Your Account</h2>
+            <p class="subtitle">Help improve your city by reporting civic issues and earning rewards.</p>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Create a strong password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('password', this)">👁️</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="confirmPassword" placeholder="Repeat your password" required>
+                        <button type="button" class="eye-btn"
+                            onclick="togglePassword('confirmPassword', this)">👁️</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">User Role</label>
+                    <select id="role">
+                        <option value="Citizen">🏠 Citizen</option>
+
+                    </select>
+                </div>
+
+                <label class="checkbox-label" for="agreeCheck" onclick="this.classList.toggle('checked')">
+                    <input type="checkbox" id="agreeCheck" required>
+                    <span class="check-box"></span>
+                    I agree to the <strong style="color:var(--accent);">Terms of Service</strong> and <strong
+                        style="color:var(--accent);">Privacy Policy</strong>
+                </label>
+
+                <button type="submit" class="btn-primary" id="registerBtn">Create Account →</button>
+            </form>
+
+            <hr class="divider">
+
+            <p class="switch">
+                Already have an account?
+                <a href="index.html">Sign In</a>
+            </p>
         </div>
-
-        <h2>Create Your Account</h2>
-        <p class="subtitle">Help improve your city by reporting civic issues and earning rewards.</p>
-
-        <form id="signupForm">
-            <div class="form-group">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" placeholder="Your full name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" placeholder="you@example.com" required>
-            </div>
-
-            <div class="form-group">
-                <label for="mobile">Mobile Number</label>
-                <input type="tel" id="mobile" placeholder="+91 XXXXX XXXXX" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="password-field">
-                    <input type="password" id="password" placeholder="Create a strong password" required>
-                    <button type="button" class="eye-btn" onclick="togglePassword('password', this)">👁️</button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <div class="password-field">
-                    <input type="password" id="confirmPassword" placeholder="Repeat your password" required>
-                    <button type="button" class="eye-btn" onclick="togglePassword('confirmPassword', this)">👁️</button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="role">User Role</label>
-                <select id="role">
-                    <option value="Citizen">🏠 Citizen</option>
-                    <option value="Service Professional">🔧 Service Professional</option>
-                    <option value="Job Applicant">💼 Job Applicant</option>
-                </select>
-            </div>
-
-            <label class="checkbox-label" for="agreeCheck" onclick="this.classList.toggle('checked')">
-                <input type="checkbox" id="agreeCheck" required>
-                <span class="check-box"></span>
-                I agree to the <strong style="color:var(--accent);">Terms of Service</strong> and <strong style="color:var(--accent);">Privacy Policy</strong>
-            </label>
-
-            <button type="submit" class="btn-primary" id="registerBtn">Create Account →</button>
-        </form>
-
-        <hr class="divider">
-
-        <p class="switch">
-            Already have an account?
-            <a href="index.html">Sign In</a>
-        </p>
     </div>
-</div>
 
-<script>
-function togglePassword(id, btn) {
-    const input = document.getElementById(id);
-    input.type = input.type === 'password' ? 'text' : 'password';
-    btn.textContent = input.type === 'password' ? '👁️' : '🙈';
-}
-
-document.getElementById('signupForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const fullName = document.getElementById('fullName').value.trim();
-    const email    = document.getElementById('email').value.trim();
-    const mobile   = document.getElementById('mobile').value.trim();
-    const password = document.getElementById('password').value;
-    const confirm  = document.getElementById('confirmPassword').value;
-    const role     = document.getElementById('role').value;
-    const btn      = document.getElementById('registerBtn');
-
-    if (password !== confirm) {
-        showErr('⚠️ Passwords do not match!');
-        return;
-    }
-    if (password.length < 6) {
-        showErr('⚠️ Password must be at least 6 characters.');
-        return;
-    }
-
-    btn.textContent = 'Creating account…';
-    btn.disabled = true;
-
-    try {
-        const res  = await fetch('/api/auth/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fullName, email, mobile, password, role })
-        });
-        const data = await res.json();
-
-        if (data.ok) {
-            // Auto-login: store user and redirect
-            sessionStorage.setItem('currentUser', JSON.stringify({
-                id: data.data.id, fullName: data.data.full_name || fullName,
-                email: data.data.email || email, mobile: data.data.mobile || mobile,
-                role: data.data.role || role, points: 0, joinDate: data.data.join_date
-            }));
-            window.location.href = 'dashboard.html';
-        } else {
-            btn.textContent = 'Create Account →';
-            btn.disabled = false;
-            showErr('⚠️ ' + (data.error || 'Registration failed.'));
+    <script>
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+            btn.textContent = input.type === 'password' ? '👁️' : '🙈';
         }
-    } catch (err) {
-        btn.textContent = 'Create Account →';
-        btn.disabled = false;
-        alert('⚠️ Could not connect to server. Make sure the server is running (node server.js).');
-    }
-});
 
-function showErr(msg) {
-    let el = document.getElementById('regError');
-    if (!el) {
-        el = document.createElement('p');
-        el.id = 'regError';
-        el.style.cssText = 'color:#EF4444;font-size:13px;margin-top:8px;text-align:center;';
-        document.getElementById('signupForm').appendChild(el);
-    }
-    el.textContent = msg;
-}
-</script>
+        document.getElementById('signupForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const role = document.getElementById('role').value;
+            const btn = document.getElementById('registerBtn');
+
+            if (password !== confirm) {
+                showErr('⚠️ Passwords do not match!');
+                return;
+            }
+            if (password.length < 6) {
+                showErr('⚠️ Password must be at least 6 characters.');
+                return;
+            }
+
+            btn.textContent = 'Creating account…';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName, email, mobile, password, role })
+                });
+                const data = await res.json();
+
+                if (data.ok) {
+                    // Auto-login: store user and redirect
+                    sessionStorage.setItem('currentUser', JSON.stringify({
+                        id: data.data.id, fullName: data.data.full_name || fullName,
+                        email: data.data.email || email, mobile: data.data.mobile || mobile,
+                        role: data.data.role || role, points: 0, joinDate: data.data.join_date
+                    }));
+                    window.location.href = 'dashboard.html';
+                } else {
+                    btn.textContent = 'Create Account →';
+                    btn.disabled = false;
+                    showErr('⚠️ ' + (data.error || 'Registration failed.'));
+                }
+            } catch (err) {
+                btn.textContent = 'Create Account →';
+                btn.disabled = false;
+                alert('⚠️ Could not connect to server. Make sure the server is running (node server.js).');
+            }
+        });
+
+        function showErr(msg) {
+            let el = document.getElementById('regError');
+            if (!el) {
+                el = document.createElement('p');
+                el.id = 'regError';
+                el.style.cssText = 'color:#EF4444;font-size:13px;margin-top:8px;text-align:center;';
+                document.getElementById('signupForm').appendChild(el);
+            }
+            el.textContent = msg;
+        }
+    </script>
 
 </body>
+
 </html>

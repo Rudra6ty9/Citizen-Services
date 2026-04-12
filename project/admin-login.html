@@ -1,190 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vadodara Connect | Admin Login</title>
-<meta name="description" content="Secure admin login for Vadodara Connect city management portal.">
-<link rel="stylesheet" href="style.css">
-<style>
-    .admin-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(251,146,60,0.15);
-        color: #FB923C;
-        border: 1px solid rgba(251,146,60,0.3);
-        border-radius: 99px;
-        padding: 4px 14px;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        margin-bottom: 20px;
-    }
-    .sample-creds {
-        margin-top: 20px;
-        background: rgba(79,142,247,0.07);
-        border: 1px dashed rgba(79,142,247,0.25);
-        border-radius: 12px;
-        padding: 16px 18px;
-        font-size: 13px;
-    }
-    .sample-creds p {
-        color: var(--text-secondary);
-        margin-bottom: 6px;
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.6px;
-    }
-    .cred-row {
-        display: flex;
-        align-items:center;
-        justify-content:space-between;
-        gap: 10px;
-        background: rgba(255,255,255,0.04);
-        border-radius: 8px;
-        padding: 8px 12px;
-        margin-top: 6px;
-        font-family: monospace;
-        font-size: 13px;
-        color: var(--accent);
-    }
-    .copy-btn {
-        background: none !important;
-        border: none !important;
-        padding: 2px 6px !important;
-        font-size: 12px !important;
-        color: var(--text-muted) !important;
-        cursor: pointer;
-        box-shadow: none !important;
-        min-width: auto !important;
-        width: auto !important;
-        transform: none !important;
-    }
-    .copy-btn:hover { color: var(--accent) !important; transform: none !important; box-shadow: none !important; }
-    .citizen-link {
-        text-align: center;
-        margin-top: 18px;
-        font-size: 12px;
-        color: var(--text-muted);
-    }
-    .citizen-link a { color: var(--text-secondary); text-decoration:none; }
-    .citizen-link a:hover { color: var(--text-primary); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vadodara Connect | Admin Login</title>
+    <meta name="description" content="Secure admin login for Vadodara Connect city management portal.">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(251, 146, 60, 0.15);
+            color: #FB923C;
+            border: 1px solid rgba(251, 146, 60, 0.3);
+            border-radius: 99px;
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 20px;
+        }
+
+        .sample-creds {
+            margin-top: 20px;
+            background: rgba(79, 142, 247, 0.07);
+            border: 1px dashed rgba(79, 142, 247, 0.25);
+            border-radius: 12px;
+            padding: 16px 18px;
+            font-size: 13px;
+        }
+
+        .sample-creds p {
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .cred-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 6px;
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--accent);
+        }
+
+        .copy-btn {
+            background: none !important;
+            border: none !important;
+            padding: 2px 6px !important;
+            font-size: 12px !important;
+            color: var(--text-muted) !important;
+            cursor: pointer;
+            box-shadow: none !important;
+            min-width: auto !important;
+            width: auto !important;
+            transform: none !important;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent) !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .citizen-link {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .citizen-link a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .citizen-link a:hover {
+            color: var(--text-primary);
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="auth-page">
-    <div class="auth-card">
+    <div class="auth-page">
+        <div class="auth-card">
 
-        <div class="auth-brand">
-            <div class="auth-brand-icon">🏛️</div>
-            <div>
-                <div class="auth-brand-name">Vadodara Connect</div>
-                <div class="auth-brand-sub">Administration Portal</div>
-            </div>
-        </div>
-
-        <div class="admin-badge">🔐 Admin Access Only</div>
-
-        <h2>Admin Sign In</h2>
-        <p class="subtitle">This portal is restricted to authorised city administrators.</p>
-
-        <form id="adminLoginForm">
-            <div class="form-group">
-                <label for="adminEmail">Admin Email</label>
-                <input type="email" id="adminEmail" placeholder="admin@vadodara.gov.in" required>
-            </div>
-
-            <div class="form-group">
-                <label for="adminPassword">Password</label>
-                <div class="password-field">
-                    <input type="password" id="adminPassword" placeholder="Enter admin password" required>
-                    <button type="button" class="eye-btn" onclick="togglePassword('adminPassword', this)">👁️</button>
+            <div class="auth-brand">
+                <div class="auth-brand-icon">🏛️</div>
+                <div>
+                    <div class="auth-brand-name">Vadodara Connect</div>
+                    <div class="auth-brand-sub">Administration Portal</div>
                 </div>
             </div>
 
-            <div id="loginError" style="display:none; color:#EF4444; font-size:13px; margin-top:10px; text-align:center;"></div>
+            <div class="admin-badge">🔐 Admin Access Only</div>
 
-            <button type="submit" class="btn-primary" id="loginBtn" style="background: linear-gradient(135deg,#FB923C,#EF4444);">
-                Access Admin Panel →
-            </button>
-        </form>
+            <h2>Admin Sign In</h2>
+            <p class="subtitle">This portal is restricted to authorised city administrators.</p>
 
-        <!-- Sample Credentials -->
-        <div class="sample-creds">
-            <p>🧪 Sample Admin Credentials</p>
-            <div class="cred-row">
-                <span>admin@vadodara.gov.in</span>
-                <button class="copy-btn" onclick="copyText('admin@vadodara.gov.in', this)">📋</button>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Admin Email</label>
+                    <input type="email" id="adminEmail" placeholder="admin@vadodara.gov.in" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                        <button type="button" class="eye-btn"
+                            onclick="togglePassword('adminPassword', this)">👁️</button>
+                    </div>
+                </div>
+
+                <div id="loginError"
+                    style="display:none; color:#EF4444; font-size:13px; margin-top:10px; text-align:center;"></div>
+
+                <button type="submit" class="btn-primary" id="loginBtn"
+                    style="background: linear-gradient(135deg,#FB923C,#EF4444);">
+                    Access Admin Panel →
+                </button>
+            </form>
+
+
+
+            <div class="citizen-link">
+                <a href="index.html">← Back to Citizen Portal</a>
             </div>
-            <div class="cred-row">
-                <span>Admin@123</span>
-                <button class="copy-btn" onclick="copyText('Admin@123', this)">📋</button>
-            </div>
-        </div>
-
-        <div class="citizen-link">
-            <a href="index.html">← Back to Citizen Portal</a>
         </div>
     </div>
-</div>
 
-<script>
-// Hardcoded admin credentials (client-side check; backend would handle this in production)
-const ADMIN_ACCOUNTS = [
-    { email: 'admin@vadodara.gov.in', password: 'Admin@123', name: 'City Administrator', role: 'Super Admin', dept: 'Municipal Corporation' },
-    { email: 'commissioner@vmc.gov.in', password: 'VMC@2024',  name: 'VMC Commissioner',   role: 'Commissioner',   dept: 'Vadodara Municipal Corporation' }
-];
+    <script>
+        // Hardcoded admin credentials (client-side check; backend would handle this in production)
+        const ADMIN_ACCOUNTS = [
+            { email: 'admin@vadodara.gov.in', password: 'Admin@123', name: 'City Administrator', role: 'Super Admin', dept: 'Municipal Corporation' },
+            { email: 'commissioner@vmc.gov.in', password: 'VMC@2024', name: 'VMC Commissioner', role: 'Commissioner', dept: 'Vadodara Municipal Corporation' }
+        ];
 
-function togglePassword(id, btn) {
-    const inp = document.getElementById(id);
-    inp.type = inp.type === 'password' ? 'text' : 'password';
-    btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
-}
-
-function copyText(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = '✅';
-        setTimeout(() => btn.textContent = '📋', 1500);
-    });
-}
-
-// If admin already logged in, redirect
-if (sessionStorage.getItem('adminSession')) {
-    window.location.href = 'admin-panel.html';
-}
-
-document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = document.getElementById('adminEmail').value.trim();
-    const pass  = document.getElementById('adminPassword').value;
-    const btn   = document.getElementById('loginBtn');
-    const err   = document.getElementById('loginError');
-
-    btn.textContent = 'Authenticating…';
-    btn.disabled = true;
-    err.style.display = 'none';
-
-    setTimeout(() => {
-        const admin = ADMIN_ACCOUNTS.find(a => a.email === email && a.password === pass);
-        if (admin) {
-            sessionStorage.setItem('adminSession', JSON.stringify({
-                email: admin.email, name: admin.name, role: admin.role, dept: admin.dept,
-                loginTime: new Date().toISOString()
-            }));
-            window.location.href = 'admin-panel.html';
-        } else {
-            btn.textContent = 'Access Admin Panel →';
-            btn.disabled = false;
-            err.textContent = '⚠️ Invalid admin credentials. Please try again.';
-            err.style.display = 'block';
+        function togglePassword(id, btn) {
+            const inp = document.getElementById(id);
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+            btn.textContent = inp.type === 'password' ? '👁️' : '🙈';
         }
-    }, 700);
-});
-</script>
+
+        function copyText(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '✅';
+                setTimeout(() => btn.textContent = '📋', 1500);
+            });
+        }
+
+        // If admin already logged in, redirect
+        if (sessionStorage.getItem('adminSession')) {
+            window.location.href = 'admin-panel.html';
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value.trim();
+            const pass = document.getElementById('adminPassword').value;
+            const btn = document.getElementById('loginBtn');
+            const err = document.getElementById('loginError');
+
+            btn.textContent = 'Authenticating…';
+            btn.disabled = true;
+            err.style.display = 'none';
+
+            setTimeout(() => {
+                const admin = ADMIN_ACCOUNTS.find(a => a.email === email && a.password === pass);
+                if (admin) {
+                    sessionStorage.setItem('adminSession', JSON.stringify({
+                        email: admin.email, name: admin.name, role: admin.role, dept: admin.dept,
+                        loginTime: new Date().toISOString()
+                    }));
+                    window.location.href = 'admin-panel.html';
+                } else {
+                    btn.textContent = 'Access Admin Panel →';
+                    btn.disabled = false;
+                    err.textContent = '⚠️ Invalid admin credentials. Please try again.';
+                    err.style.display = 'block';
+                }
+            }, 700);
+        });
+    </script>
 
 </body>
+
 </html>

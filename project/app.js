@@ -167,10 +167,6 @@ function buildComplaintCard(c) {
                 onclick="supportComplaint(this, ${c.id})">
                 👍 Support${c.supports > 0 ? ` (${c.supports})` : ''}
             </button>
-            <button class="resolve-btn" ${c.status === 'resolved' ? 'disabled' : ''}
-                onclick="resolveComplaint(this, ${c.id})">
-                ✅ Resolve
-            </button>
         </div>
     `;
     return div;
@@ -208,23 +204,6 @@ async function supportComplaint(btn, id) {
     }
 }
 
-async function resolveComplaint(btn, id) {
-    if (btn.disabled) return;
-    const r = await API.patch(`/api/complaints/${id}/status`, { status: 'resolved' });
-    if (r.ok) {
-        // Update card UI
-        const card = btn.closest('.complaint-card');
-        if (card) {
-            const badge = card.querySelector('.status');
-            if (badge) { badge.className = 'status resolved'; badge.textContent = 'Resolved'; }
-        }
-        btn.disabled = true;
-        // Re-fetch user to get updated points
-        const updated = await Session.refresh();
-        updatePointsUI();
-        showNotification('🎉 Resolved! You earned 10 points!');
-    }
-}
 
 // ─── CITY FEED ────────────────────────────────────────────────────────────────
 async function createPost() {
@@ -424,15 +403,16 @@ function updatePointsUI() {
 async function updateAdmin() {
     const r = await API.get('/api/complaints');
     if (!r.ok) return;
-    const all  = r.data;
+    const user = Session.get();
+    const freshUser = await Session.refresh() || user;
+    const all  = r.data.filter(c => c.userId === freshUser.email);
     const res  = all.filter(c => c.status === 'resolved').length;
     const pend = all.length - res;
-    const user = Session.get();
 
     setEl('totalComplaints', all.length);
     setEl('resolved', res);
     setEl('pending', pend);
-    setEl('points', user?.points || 0);
+    setEl('points', freshUser.points || 0);
 
     const bar   = document.getElementById('progressBar');
     const label = document.getElementById('progressLabel');
